@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Link } from '../common/model/link';
 
 @Component({
   template: `
@@ -49,9 +50,4 @@ export interface Member {
   name: string;
   description: string;
   links?: Link[];
-}
-
-export interface Link {
-  display: string;
-  url: string;
 }

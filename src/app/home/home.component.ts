@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Link } from '../common/model/link';
 
 @Component({
   template: `
@@ -7,9 +8,21 @@ import { Component } from '@angular/core';
       In the future, <em>SharkOps</em> will be home to DevOps knowledge including Open Source projects and Articles as they relate to
       everything DevOps. Topics will include: Pipelines, Containers, Kubernetes, App Development, etc.
     </p>
+    <h2>Community</h2>
     <p>
-      You can follow <em>SharkOps</em> at Gitlab: <a href="https://gitlab.com/sharkops" target="_blank">https://gitlab.com/sharkops</a>
+      At SharkOps we pride ourselves on being completely open, accessible, and inclusive to anyone who wishes to help, share knowledge, and mentor others.
     </p>
+    <p>Please join us here, at sharkops.io, and at our communities:</p>
+    <br />
+    <ul *ngFor="let community of communities">
+      <li><a [href]="community.url" target="_blank">{{ community.display }}</a></li>
+    </ul>
   `
 })
-export class HomeComponent {}
+export class HomeComponent {
+  communities: Link[] = [
+    { display: 'Slack', url: 'https://shark-ops.slack.com' },
+    { display: 'GitLab', url: 'https://gitlab.com/sharkops' },
+    { display: 'GitHub', url: 'https://github.com/Shark-Ops' }
+  ];
+}
