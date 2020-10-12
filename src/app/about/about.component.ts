@@ -32,14 +32,14 @@ export class AboutComponent {
       links: [
         { display: 'GitLab', url: 'https://gitlab.com/sharkops' },
         { display: 'GitHub', url: 'https://github.com/Quantas' },
-        { display: 'LinkedIn', url: 'https://www.linkedin.com/landsverka' }
+        { display: 'LinkedIn', url: 'https://www.linkedin.com/in/andrew-landsverk/' }
       ]
     },
     {
       name: 'You?',
       description: 'If you would like to become a part of SharkOps, please contact Shark at LinkedIn below.',
       links: [
-        { display: 'LinkedIn', url: 'https://www.linkedin.com/landsverka' }
+        { display: 'LinkedIn', url: 'https://www.linkedin.com/in/andrew-landsverk/' }
       ]
     }
   ];
