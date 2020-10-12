@@ -15,7 +15,9 @@ import { Link } from '../common/model/link';
     <p>Please join us here, at sharkops.io, and at our communities:</p>
     <br />
     <ul *ngFor="let community of communities">
-      <li><a [href]="community.url" target="_blank">{{ community.display }}</a></li>
+      <li>
+        <app-external-link [url]="community.url" [display]="community.display"></app-external-link>
+      </li>
     </ul>
   `
 })

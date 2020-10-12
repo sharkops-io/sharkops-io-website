@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
           <div class="content-area">
             <router-outlet></router-outlet>
             <div class="footer">
-              &copy;2020 SharkOps
+              &copy;2020 SharkOps - <app-external-link url="https://gitlab.com/sharkops/sharkops-io-website" display="Source Code"></app-external-link>
             </div>
           </div>
       </div>

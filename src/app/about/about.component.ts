@@ -15,7 +15,7 @@ import { Link } from '../common/model/link';
           </div>
           <div class="card-footer">
             <ng-container *ngFor="let link of member.links">
-              <a class="btn btn-sm btn-link" [href]="link.url" target="_blank">{{ link.display }}</a>
+              <a class="btn btn-sm btn-link" [href]="link.url" target="_blank">{{ link.display }}<clr-icon shape="link"></clr-icon></a>
             </ng-container>
           </div>
         </div>

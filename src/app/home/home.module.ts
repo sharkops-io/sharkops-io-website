@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
+import { SharkOpsCommonModule } from '../common/common.module';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
+    SharkOpsCommonModule,
     RouterModule.forChild([
       { path: '', component: HomeComponent }
     ])
