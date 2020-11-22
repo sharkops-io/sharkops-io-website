@@ -1,19 +1,11 @@
-build:
-  image: node:latest
-  stage: build
-  script:
-    - npm install
-    - npm run build
-  artifacts:
-    paths:
-      - dist
-
 pages:
+  image: 
+    name: jojomi/hugo:latest
+    entrypoint: [""]
   stage: deploy
   script:
-    - mkdir public
-    - cp -r dist/sharkops-io/* public
-    - cp public/index.html public/404.html
+    - hugo mod get
+    - hugo -d public
   artifacts:
     paths:
       - public
