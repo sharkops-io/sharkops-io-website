@@ -1,3 +1,11 @@
+# Secret scanning, which also gives merge requests a pipeline: "Pipelines must
+# succeed" is on across sharkops and GitLab refuses to merge an MR with none.
+# The include brings the cluster workflow (MR pipelines for branches, push
+# pipelines for the default branch), so `pages` below still runs on master.
+include:
+  - project: 'sharkops/gitlab-ci-common-config'
+    file: 'security/secret-scan.yml'
+
 pages:
   image: 
     name: jojomi/hugo:latest
