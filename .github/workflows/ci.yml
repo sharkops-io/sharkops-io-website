@@ -1,0 +1,42 @@
+# Secret scan on every change; on master, publish site/ to GitHub Pages.
+# The site is plain HTML and CSS, so there is no build step.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  secret-scan:
+    uses: sharkops-io/.github/.github/workflows/secret-scan.yml@main
+
+  deploy:
+    if: github.event_name == 'push'
+    needs: [secret-scan]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v5

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SharkOps</title>
+<meta name="description" content="Open source Helm charts, Prometheus exporters and container images for Kubernetes.">
+<link rel="icon" href="favicon.ico">
+<style>
+:root {
+  --bg: #ffffff;
+  --fg: #1b2433;
+  --muted: #566176;
+  --line: #dde2ea;
+  --surface: #f5f7fa;
+  --hero-bg: #0f2a4a;
+  --hero-fg: #ffffff;
+  --hero-muted: #c3d0e2;
+  --primary: #1f6feb;
+  --primary-fg: #ffffff;
+  --link: #1a5fd0;
+  --code-bg: #f0f3f7;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1520; --fg: #e4e9f1; --muted: #a2adbf; --line: #253246; --surface: #141d2b;
+    --hero-bg: #0a1f38; --hero-fg: #ffffff; --hero-muted: #b4c3d8;
+    --primary: #3b82f6; --primary-fg: #ffffff; --link: #7aaaf7; --code-bg: #182233;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1520; --fg: #e4e9f1; --muted: #a2adbf; --line: #253246; --surface: #141d2b;
+  --hero-bg: #0a1f38; --hero-fg: #ffffff; --hero-muted: #b4c3d8;
+  --primary: #3b82f6; --primary-fg: #ffffff; --link: #7aaaf7; --code-bg: #182233;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+a { color: var(--link); }
+a:focus-visible, .button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+
+.nav { background: var(--hero-bg); color: var(--hero-fg); }
+.nav .container { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding-block: 16px; }
+.brand { color: var(--hero-fg); font-weight: 700; font-size: 20px; text-decoration: none; }
+.nav ul { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 0; padding: 0; list-style: none; }
+.nav ul a { color: var(--hero-muted); text-decoration: none; }
+.nav ul a:hover { color: var(--hero-fg); }
+
+.hero { background: var(--hero-bg); color: var(--hero-fg); }
+.hero .container { padding-block: 64px 72px; display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+.hero h1 { margin: 0; font-size: clamp(40px, 6vw, 60px); line-height: 1.1; letter-spacing: -0.02em; }
+.hero p { margin: 0; max-width: 40em; font-size: 20px; color: var(--hero-muted); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.button { display: inline-block; padding: 12px 22px; border-radius: 6px; font-weight: 600; text-decoration: none; }
+.button.primary { background: var(--primary); color: var(--primary-fg); }
+.button.secondary { color: var(--hero-fg); border: 1px solid var(--hero-muted); }
+
+section.block .container { padding-block: 56px; }
+#projects .container { padding-top: 40px; }
+h2 { margin: 0 0 8px; font-size: 30px; line-height: 1.2; }
+.lead { margin: 0 0 24px; color: var(--muted); max-width: 44em; }
+h3.group { margin: 32px 0 16px; font-size: 18px; color: var(--muted); font-weight: 600; }
+.lead + h3.group { margin-top: 0; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.card { display: flex; flex-direction: column; gap: 8px; padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); min-width: 0; }
+.card h4 { margin: 0; font-size: 17px; }
+.card p { margin: 0; color: var(--muted); flex: 1; }
+.card .links { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 15px; }
+
+.started { background: var(--surface); border-block: 1px solid var(--line); }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.steps > div { min-width: 0; }
+.steps h3 { margin: 0 0 8px; font-size: 18px; }
+.steps p { margin: 0 0 12px; color: var(--muted); }
+pre { margin: 0; padding: 14px 16px; background: var(--code-bg); border: 1px solid var(--line); border-radius: 6px; overflow-x: auto; }
+
+footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 28px; }
+footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container">
+    <a class="brand" href="/">SharkOps</a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#get-started">Get started</a></li>
+        <li><a href="#contributing">Contributing</a></li>
+        <li><a href="https://github.com/sharkops-io">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <h1>SharkOps</h1>
+      <p>Open source Helm charts, Prometheus exporters and container images for Kubernetes.</p>
+      <div class="actions">
+        <a class="button primary" href="#get-started">Get started</a>
+        <a class="button secondary" href="https://github.com/sharkops-io">View on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="projects">
+    <div class="container">
+      <h2>Projects</h2>
+      <p class="lead">Every project is Apache 2.0 licensed. Charts are published to <code>oci://ghcr.io/sharkops-io/charts</code> and images to <code>ghcr.io/sharkops-io</code>.</p>
+
+      <h3 class="group">Helm charts</h3>
+      <div class="grid">
+        <div class="card">
+          <h4>sharkops-universal</h4>
+          <p>A general-purpose chart for running any container image, with Service, Ingress, persistent volumes, probes, and environment from ConfigMaps and Secrets.</p>
+          <div class="links"><a href="https://github.com/sharkops-io/sharkops-universal">Repository</a></div>
+        </div>
+        <div class="card">
+          <h4>cnpg-cluster</h4>
+          <p>A CloudNativePG Postgres cluster with WAL archiving and scheduled backups to S3-compatible storage through the Barman Cloud plugin.</p>
+          <div class="links"><a href="https://github.com/sharkops-io/cnpg-cluster">Repository</a></div>
+        </div>
+        <div class="card">
+          <h4>oidc-proxy-ingress</h4>
+          <p>Puts an in-cluster service behind oauth2-proxy and an Ingress, using any OIDC provider.</p>
+          <div class="links"><a href="https://github.com/sharkops-io/oidc-proxy-ingress">Repository</a></div>
+        </div>
+        <div class="card">
+          <h4>sharkops-netpol</h4>
+          <p>A default-deny ingress NetworkPolicy plus a Cilium ingress policy for a namespace.</p>
+          <div class="links"><a href="https://github.com/sharkops-io/sharkops-netpol">Repository</a></div>
+        </div>
+      </div>
+
+      <h3 class="group">Prometheus exporters</h3>
+      <div class="grid">
+        <div class="card">
+          <h4>adguard-exporter</h4>
+          <p>Metrics from AdGuard Home.</p>
+          <div class="links"><a href="https://github.com/sharkops-io/adguard-exporter">Repository</a></div>
+        </div>
+        <div class="card">
+          <h4>unas-protect-exporter</h4>
+          <p>Metrics from UniFi UNAS storage and UniFi Protect.</p>
+          <div class="links"><a href="https://github.com/sharkops-io/unas-protect-exporter">Repository</a></div>
+        </div>
+        <div class="card">
+          <h4>gameserver-exporter</h4>
+          <p>Metrics from Palworld and Satisfactory dedicated servers.</p>
+          <div class="links"><a href="https://github.com/sharkops-io/gameserver-exporter">Repository</a></div>
+        </div>
+        <div class="card">
+          <h4>netpol-coverage-exporter</h4>
+          <p>Per-pod NetworkPolicy and CiliumNetworkPolicy coverage.</p>
+          <div class="links"><a href="https://github.com/sharkops-io/netpol-coverage-exporter">Repository</a></div>
+        </div>
+        <div class="card">
+          <h4>exporter-common</h4>
+          <p>The Go library the exporters share for HTTP clients, metrics and tests.</p>
+          <div class="links"><a href="https://github.com/sharkops-io/exporter-common">Repository</a></div>
+        </div>
+      </div>
+
+      <h3 class="group">Images and tools</h3>
+      <div class="grid">
+        <div class="card">
+          <h4>k8s-cli-tools</h4>
+          <p>A multi-arch CI image with kubectl, Helm, helmfile, kustomize and the Rancher CLI.</p>
+          <div class="links"><a href="https://github.com/sharkops-io/k8s-cli-tools">Repository</a></div>
+        </div>
+        <div class="card">
+          <h4>docker-api-gateway</h4>
+          <p>Exposes a read-only part of the Docker Engine API, container list and logs, behind a bearer token.</p>
+          <div class="links"><a href="https://github.com/sharkops-io/docker-api-gateway">Repository</a></div>
+        </div>
+        <div class="card">
+          <h4>Shared CI workflows</h4>
+          <p>The reusable GitHub Actions workflows every SharkOps repository builds with.</p>
+          <div class="links"><a href="https://github.com/sharkops-io/.github">Repository</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block started" id="get-started">
+    <div class="container">
+      <h2>Get started</h2>
+      <p class="lead">Charts install straight from the OCI registry, so there is no Helm repository to add.</p>
+      <div class="steps">
+        <div>
+          <h3>Install a chart</h3>
+          <p>Each chart's README lists its values and examples.</p>
+          <pre><code>helm install my-app \
+  oci://ghcr.io/sharkops-io/charts/sharkops-universal \
+  -f values.yaml</code></pre>
+        </div>
+        <div>
+          <h3>Run an exporter</h3>
+          <p>Each exporter's README lists its settings and metrics.</p>
+          <pre><code>docker pull ghcr.io/sharkops-io/adguard-exporter:latest</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contributing">
+    <div class="container">
+      <h2>Contributing</h2>
+      <p class="lead">All development happens on GitHub. Open an issue to report a bug or suggest a change, or send a pull request. Every pull request runs the project's tests and a secret scan before it can merge.</p>
+      <div class="actions">
+        <a class="button primary" href="https://github.com/sharkops-io">Browse repositories</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <span>Code is licensed under Apache 2.0. Site content is licensed under CC BY 4.0.</span>
+    <a href="https://github.com/sharkops-io/sharkops-io-website">Edit this site on GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>
