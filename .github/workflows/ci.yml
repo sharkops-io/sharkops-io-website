@@ -6,6 +6,7 @@ on:
   pull_request:
   push:
     branches: [master]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -19,7 +20,7 @@ jobs:
     uses: sharkops-io/.github/.github/workflows/secret-scan.yml@main
 
   deploy:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     needs: [secret-scan]
     runs-on: ubuntu-latest
     timeout-minutes: 10
